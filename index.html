@@ -1,0 +1,76 @@
+<!doctype html>
+<html ng-app="basket">
+    <head>
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+        <link rel="stylesheet" href="scripts/vendor/angular-ui-ng-grid/ng-grid.css">
+        <link rel="stylesheet" href="styles/basket.css">
+        <link rel="stylesheet" href="styles/bootstrap.css">
+    </head>
+    <body>
+        <div class="container-fluid" >
+            <div class="row-fluid" ng-controller="BasketCtrl">
+                <div class="span4">
+                    <form name="basketForm" class="form" ng-submit="addItem()">
+                        <h4>My Sample Basket Application</h4>
+                        <div class="control-group">
+                            <label class="control-label" for="description">Item Description</label>
+                            <div class="controls">
+                                <input type="text" id="description" ng-model="itemDesc" required class="input-xlarge">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="quantity">Quantity</label>
+                            <div class="controls">
+                                <input class="span2" id="quantity" restrict="[^0-9]" maxlength="3" ng-model="itemQuantity" required type="text">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="price">Item Price</label>
+                            <div class="controls">
+                                <div class="input-prepend input-append">
+                                    <span class="add-on">$</span>
+                                    <input class="span4" id="price" maxlength="5" restrict="[^0-9.]"ng-model="itemPrice" required type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" ng-disabled="!basketForm.$valid" class="btn btn-primary">Add</button>
+                            <button type="button" ng-click="clearItems()" class="btn btn-danger">Clear</button>
+                            <button type="button" ng-disabled="!getTotalItems()" ng-click="calculate()" class="btn">Calculate</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="span8">
+                    <div class="gridStyle" ng-grid="gridOptions"></div>
+                </div>
+                <div modal="calModal" close="close()" hidden="true">
+                    <div class="modal-header">
+                        <h4>Your Checkout Order</h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul>
+                            <li ng-repeat="item in items">
+                                {{item.quantity}} {{item.description}}: {{item.totalPrice | currency}}
+                            </li>
+                        </ul>
+
+                        <span><b>Sales Taxes:</b> {{salesTax | currency}}</span>
+                        <p><b>Total:</b> {{total | currency}}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-warning cancel" ng-click="closeCalculate()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>-->
+        <script type="text/javascript" src="scripts/vendor/angular-ui-ng-grid/lib/angular.min.js"></script>
+        <script type="text/javascript" src="scripts/vendor/angular-ui-ng-grid/lib/jquery-1.8.2.min.js"></script>
+        <script type="text/javascript" src="scripts/vendor/angular-ui-ng-grid/ng-grid-1.9.0.js"></script>
+        <script type="text/javascript" src="scripts/vendor/angular-ui-ng-grid/lib/ui-bootstrap-tpls-0.1.0.js"></script>
+        <script type="text/javascript" src="scripts/app.js"></script>
+        <script src="scripts/controllers/BasketCtrl.js"></script>
+        <script src="scripts/directives/Restrict.js"></script>
+    </body>
+</html>

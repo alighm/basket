@@ -1,0 +1,1 @@
+angular.module('basket', ['ngGrid', 'ui.bootstrap']);

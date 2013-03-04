@@ -1,0 +1,17 @@
+.gridStyle {
+    margin-top: 20px;
+    border: 1px solid rgb(212,212,212);
+    height: 320px;
+}
+ul {
+    list-style-type: none;
+}
+#loader {
+    text-align: center;
+    width: 80px;
+    border: solid 1px red;
+    padding: 5px 9px;
+    position: absolute;
+    left: 50%;
+    margin-left: -40px;
+}
