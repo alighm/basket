@@ -12,40 +12,12 @@ angular.module('basket', ['ngGrid', 'ui.bootstrap']).controller('BasketCtrl', fu
             {field: 'price', displayName: 'Item Price', cellFilter: 'currency'}]
     };
 
-    taxCalculate = function() {
-        // Taxes for these goods are 0. Everything else 10%
-        var taxGoods = ['food', 'book', 'medical', 'chocolate', 'bar', 'fruit',
-            'pizza', 'tomato', 'can', 'soup','vegetable'],
-
-            // Additional 5% tax for any of these products.
-            taxImport = ['import', 'Imported', 'Import'],
-            tax;
-
-        if (!taxGoods.some(function(v) {
-            return $scope.itemDesc.indexOf(v) >= 0;
-        }) && taxImport.some(function(v) {
-            return $scope.itemDesc.indexOf(v) >= 0;
-        })) {
-            tax = ($scope.itemPrice * 15) / 100;
-        } else if (taxImport.some(function(v) {
-            return $scope.itemDesc.indexOf(v) >= 0;
-        })) {
-            tax = ($scope.itemPrice * 5) / 100;
-        } else if (!taxGoods.some(function(v) {
-            return $scope.itemDesc.indexOf(v) >= 0;
-        })) {
-            tax = ($scope.itemPrice * 10) / 100;
-        }
-
-        return tax;
-    };
-
     $scope.addItem = function() {
         if (isNaN($scope.itemPrice)) {
             $scope.itemPrice = 0;
         }
         var totalPrice = $scope.itemPrice * $scope.itemQuantity,
-            tax = taxCalculate() !== undefined ? taxCalculate() : 0;
+            tax = $scope.itemPrice * 5 / 100;
 
         $scope.salesTax = parseFloat($scope.salesTax) + parseFloat(tax);
         $scope.salesTax = (Math.ceil($scope.salesTax * 20) / 20).toFixed(2);
